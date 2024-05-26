@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-from langchain.chains import LLMChain
 from langchain_groq import ChatGroq
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
