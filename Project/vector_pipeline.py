@@ -1,10 +1,7 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
-import io
 
-# Load environment variables from .env file
-load_dotenv()
 
 # Get the database connection string
 NEON_DB = os.getenv('NEON_DATABASE')
