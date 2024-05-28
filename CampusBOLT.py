@@ -11,7 +11,7 @@ from Project.prompts import custom_answer_prompt_template
 from langchain.prompts import PromptTemplate
 
 # Streamlit UI
-st.title("💬 EduRAG")
+st.title("💬 CampusBOLT")
 st.caption("🚀 Get ESSEC info without the headache")
 
 
@@ -38,12 +38,27 @@ if "memory" not in st.session_state:
     st.session_state.memory = ConversationBufferWindowMemory(k=10, memory_key="chat_history", return_messages=True)
 
 # Sidebar option to select the model
-model_options = ["Groq 7B", "Mistral Large"]
+model_options = ["Mistral 70B", "Groq (Mistral 7B)"]
 selected_model = st.sidebar.selectbox("Select Model", model_options)
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
+if 'clicked' not in st.session_state:
+            st.session_state.clicked = False
+
+def click_button():
+    st.session_state.clicked = True
+
+memory_variables = st.session_state.memory.load_memory_variables({})
+chat_history = memory_variables.get("chat_history", [])
+
+if st.session_state.clicked:
+            # The message and nested widget will remain on the page
+            st.write("We have raised a ticket for you. Please wait for a response.")
+            send_to_slack(chat_history)
+            st.session_state.clicked = False
+    
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "human", "content": prompt})
     st.chat_message("user").write(prompt)
@@ -58,7 +73,7 @@ if prompt := st.chat_input():
     answer_prompt = PromptTemplate(template=custom_answer_prompt_template, input_variables=['context', 'query'])
     formatted_prompt = answer_prompt.format(query=prompt, context=context)
 
-    if selected_model == "Groq 7B":
+    if selected_model == "Groq (Mistral 7B)":
         llm_groq=st.session_state.groq_chat
         response = llm_groq.invoke(formatted_prompt).content
 
@@ -73,12 +88,12 @@ if prompt := st.chat_input():
                             {'role': 'assistant', 'content': 'The capital of Italy is Rome.'}
                         ]
 
-        st.button("I need more help", onclick=send_to_slack, args=list_temp)
-        st.chat_message("assistant").write("We have raised a ticket for you. Please wait for a response.")
+        
+        
 
+        st.button("I need more help", on_click=click_button)
 
-
-
+    
     else:
         model = "mistral-large-latest"
         messages = [
@@ -98,8 +113,4 @@ if prompt := st.chat_input():
         st.session_state.messages.append({"role": "AI", "content": full_response})
 
 
-        if st.button("I need more help"):
-            st.session_state.messages.append({"role": "assistant", "content": "We have raised a ticket for you. Please wait for a response."})
-            send_to_slack(st.memory.chat_history)
-        else:
-            pass
+        st.button("I need more help", on_click=click_button)
