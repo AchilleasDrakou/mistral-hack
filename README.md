@@ -14,7 +14,7 @@ The app is avaialable on [Streamlit](https://campusbolt.streamlit.app/).
 The **CampusBOLT** is a robust solution designed to assist students with administrative queries using RAG and LLMs. It serves as a virtual advisor, providing timely and accurate information, making the administrative process more efficient and student-friendly.
 
 ## Features
-- **Uses Mistral large model/Groq**: Groq helps in faster inference speeds, whilst Mistral gives a slightly accurate answer, based on user's need.
+- **Uses Mistral large model/Groq**: User can select between Groq for faster inference speeds, or Mistral for more thorough answers.
 - **Information Retrieval**: Utilizes RAG to fetch relevant information from a vast knowledge base.
 - **User-Friendly Interface**: Easy to interact with, providing a seamless user experience.
 - **Multi-Lingual Support**: Responds to the user query in their language
