@@ -1,6 +1,5 @@
 ﻿# Mistral-Hackathon-2024
 This was part of a 24-hour hackathan based in Paris.
-The app is avaialable on [Streamlit](https://campusbolt.streamlit.app/).
 
 # CampusBOLT
 
@@ -29,7 +28,7 @@ The **CampusBOLT** is a robust solution designed to assist students with adminis
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Roshan-Velpula/Mistral-Hackathon-2024.git
+   git clone https://github.com/AchilleasDrakou/mistral-hack.git
 
 2. Create and activate a virtual environment
     **In MacOS:**
